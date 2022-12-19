@@ -87,7 +87,149 @@ default:
 *Values in `switch` cases can be checked for their inclusion in an interval. This example uses number intervals to provide a natural-language count for numbers of any size:*
 
 ```swift
-
+let approximateCount = 62
+let countedThings = "moons orbiting Saturn"
+let naturalCount: String
+switch approximateCount {
+case 0:
+    naturalCount = "no"
+case 1..<5:
+    naturalCount = "a few"
+case 5..<12:
+    naturalCount = "several"
+case 12..<100:
+    naturalCount = "dozens of"
+case 100..<1000:
+    naturalCount = "hundreds of"
+default:
+    naturalCount = "many"
+}
+print("There are \(naturalCount) \(countedThings).")
+// Prints "There are dozens of moons orbiting Saturn."
 ```
 
 *In the above example, `approximateCount` is evaluated in a `switch` statement. Each `case` compares that value to a number or interval. Because the value of `approximateCount` falls between 12 and 100, `naturalCount` is assigned the value `"dozens of"`, and execution is transferred out of the `switch` statement.*
+
+
+
+#### *Tuples*
+
+*You can use tuples to test multiple values in the same `switch` statement. Each element of the tuple can be tested against a different value or interval of values. Alternatively, use the underscore character (`_`), also known as the wildcard pattern, to match any possible value.*
+
+*The example below takes an (x, y) point, expressed as a simple tuple of type `(Int, Int)`, and categorizes it on the graph that follows the example.*
+
+```swift
+let somePoint = (1, 1)
+switch somePoint {
+case (0, 0):
+    print("\(somePoint) is at the origin")
+case (_, 0):
+    print("\(somePoint) is on the x-axis")
+case (0, _):
+    print("\(somePoint) is on the y-axis")
+case (-2...2, -2...2):
+    print("\(somePoint) is inside the box")
+default:
+    print("\(somePoint) is outside of the box")
+}
+// Prints "(1, 1) is inside the box"
+```
+
+![](https://docs.swift.org/swift-book/_images/coordinateGraphSimple_2x.png)
+
+*The `switch` statement determines whether the point is at the origin (0, 0), on the red x-axis, on the green y-axis, inside the blue 4-by-4 box centered on the origin, or outside of the box.*
+
+*Unlike C, Swift allows multiple `switch` cases to consider the same value or values. In fact, the point (0, 0) could match all four of the cases in this example. However, if multiple matches are possible, the first matching case is always used. The point (0, 0) would match `case (0, 0)` first, and so all other matching cases would be ignored.*
+
+#### *Value Bindings*
+
+*A `switch` case can name the value or values it matches to temporary constants or variables, for use in the body of the case. This behavior is known as value binding, because the values are bound to temporary constants or variables within the case’s body.*
+
+*The example below takes an (x, y) point, expressed as a tuple of type `(Int, Int)`, and categorizes it on the graph that follows:*
+
+```swift
+let anotherPoint = (2, 0)
+switch anotherPoint {
+case (let x, 0):
+    print("on the x-axis with an x value of \(x)")
+case (0, let y):
+    print("on the y-axis with a y value of \(y)")
+case let (x, y):
+    print("somewhere else at (\(x), \(y))")
+}
+// Prints "on the x-axis with an x value of 2"
+```
+
+![](https://docs.swift.org/swift-book/_images/coordinateGraphMedium_2x.png)
+
+*The `switch` statement determines whether the point is on the red x-axis, on the green y-axis, or elsewhere (on neither axis).*
+
+*The three `switch` cases declare placeholder constants `x` and `y`, which temporarily take on one or both tuple values from `anotherPoint`. The first case, `case (let x, 0)`, matches any point with a `y` value of `0` and assigns the point’s `x` value to the temporary constant `x`. Similarly, the second case, `case (0, let y)`, matches any point with an `x` value of `0` and assigns the point’s `y` value to the temporary constant `y`.*
+
+*After the temporary constants are declared, they can be used within the case’s code block. Here, they’re used to print the categorization of the point.*
+
+*This `switch` statement doesn’t have a `default` case. The final case, `case let (x, y)`, declares a tuple of two placeholder constants that can match any value. Because `anotherPoint` is always a tuple of two values, this case matches all possible remaining values, and a `default` case isn’t needed to make the `switch` statement exhaustive.*
+
+#### *Where*
+
+*A `switch` case can use a `where` clause to check for additional conditions.*
+
+*The example below categorizes an (x, y) point on the following graph:*
+
+```swift
+let yetAnotherPoint = (1, -1)
+switch yetAnotherPoint {
+case let (x, y) where x == y:
+    print("(\(x), \(y)) is on the line x == y")
+case let (x, y) where x == -y:
+    print("(\(x), \(y)) is on the line x == -y")
+case let (x, y):
+    print("(\(x), \(y)) is just some arbitrary point")
+}
+// Prints "(1, -1) is on the line x == -y"
+```
+
+![](https://docs.swift.org/swift-book/_images/coordinateGraphComplex_2x.png)
+
+*The `switch` statement determines whether the point is on the green diagonal line where `x == y`, on the purple diagonal line where `x == -y`, or neither.*
+
+*The three `switch` cases declare placeholder constants `x` and `y`, which temporarily take on the two tuple values from `yetAnotherPoint`. These constants are used as part of a `where` clause, to create a dynamic filter. The `switch` case matches the current value of `point` only if the `where` clause’s condition evaluates to `true` for that value.*
+
+*As in the previous example, the final case matches all possible remaining values, and so a `default` case isn’t needed to make the `switch` statement exhaustive.*
+
+#### *Compound Cases*
+
+*Multiple switch cases that share the same body can be combined by writing several patterns after `case`, with a comma between each of the patterns. If any of the patterns match, then the case is considered to match. The patterns can be written over multiple lines if the list is long. For example:*
+
+```swift
+let someCharacter: Character = "e"
+switch someCharacter {
+case "a", "e", "i", "o", "u":
+    print("\(someCharacter) is a vowel")
+case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+     "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+    print("\(someCharacter) is a consonant")
+default:
+    print("\(someCharacter) isn't a vowel or a consonant")
+}
+// Prints "e is a vowel"
+```
+
+*The `switch` statement’s first case matches all five lowercase vowels in the English language. Similarly, its second case matches all lowercase English consonants. Finally, the `default` case matches any other character.*
+
+*Compound cases can also include value bindings. All of the patterns of a compound case have to include the same set of value bindings, and each binding has to get a value of the same type from all of the patterns in the compound case. This ensures that, no matter which part of the compound case matched, the code in the body of the case can always access a value for the bindings and that the value always has the same type.*
+
+```swift
+let stillAnotherPoint = (9, 0)
+switch stillAnotherPoint {
+case (let distance, 0), (0, let distance):
+    print("On an axis, \(distance) from the origin")
+default:
+    print("Not on an axis")
+}
+// Prints "On an axis, 9 from the origin"
+```
+
+*The `case` above has two patterns: `(let distance, 0)` matches points on the x-axis and *`(0, let distance)` matches points on the y-axis. Both patterns include a binding for `distance` and `distance` is an integer in both patterns—which means that the code in the body of the `case` can always access a value for `distance`.*
+
+
