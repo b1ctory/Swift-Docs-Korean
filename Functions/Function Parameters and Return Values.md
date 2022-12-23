@@ -1,10 +1,14 @@
-# *Function Parameters and Return Values*
+# *Function Parameters and Return Values : 기능 매개변수 및 반환값*
 
 *Function parameters and return values are extremely flexible in Swift. You can define anything from a simple utility function with a single unnamed parameter to a complex function with expressive parameter names and different parameter options.*
 
-### *Functions Without Parameters*
+Swift에서는 기능 매개변수 및 반환값이 매우 유연합니다. 이름 없는 단일 매개 변수를 사용하는 단순 유틸리티 함수부터 표현식 매개변수 이름과 다른 매개변수 옵션을 사용하는 복잡한 함수까지 모든 것을 정의할 수 있습니다.
+
+### *Functions Without Parameters : 매개변수가 없는 함수*
 
 *Functions aren’t required to define input parameters. Here’s a function with no input parameters, which always returns the same `String` message whenever it’s called:*
+
+입력 파라미터를 정의하는 기능은 필요하지 않습니다. 다음은 입력 매개변수가 없는 함수입니다. 이 함수는 호출될 때마다 항상 동일한 `String` 메세지를 반환합니다.
 
 ```swift
 func sayHelloWorld() -> String {
@@ -16,11 +20,17 @@ print(sayHelloWorld())
 
 *The function definition still needs parentheses after the function’s name, even though it doesn’t take any parameters. The function name is also followed by an empty pair of parentheses when the function is called.*
 
-### *Functions With Multiple Parameters*
+함수 정의는 매개변수를 사용하지 않더라도 함수 이름 뒤에 괄호가 필요합니다. 함수를 호출할 때 함수 이름 뒤에 빈 괄호 쌍이 표시됩니다.
+
+### *Functions With Multiple Parameters : 여러 매개변수를 사용하는 함수*
 
 *Functions can have multiple input parameters, which are written within the function’s parentheses, separated by commas.*
 
+함수는 여러개의 입력 매개변수를 가질 수 있으며, 이는 쉼표로 구분된 함수의 괄호 안에 기록됩니다.
+
 *This function takes a person’s name and whether they have already been greeted as input, and returns an appropriate greeting for that person:*
+
+이 기능은 사용자의 이름과 이미 입력으로 인사를 받았는지 여부를 선택하고 해당 사용자에게 적합한 인사말을 반환합니다.
 
 ```swift
 func greet(person: String, alreadyGreeted: Bool) -> String {
@@ -36,9 +46,13 @@ print(greet(person: "Tim", alreadyGreeted: true))
 
 *You call the `greet(person:alreadyGreeted:)` function by passing it both a `String` argument value labeled `person` and a `Bool` argument value labeled `alreadyGreeted` in parentheses, separated by commas. Note that this function is distinct from the `greet(person:)` function shown in an earlier section. Although both functions have names that begin with `greet`, the `greet(person:alreadyGreeted:)` function takes two arguments but the `greet(person:)` function takes only one.*
 
-### *Functions Without Return Values*
+`greet(person:alreadyGreeted:)` 함수를 호출하려면 `person`이라는 레이블이 붙은 문자열 인수 값과 괄호 안에 있는 `alreadyGreeted`이라는 레이블이 붙은 `Bool` 인수 값을 모두 전달하고 쉼표로 구분해서 호출합니다. 이 기능은 이전 섹션에 나와 있는 `greet(person:)` 기능과는 다릅니다. 두 함수 모두 greet로 시작하는 이름이 있지만  `greet(person:alreadyGreeted:)` 함수는 두 개의 인수를 사용하고 `greet(person:)` 함수는 하나의 인수만 사용합니다.
+
+### *Functions Without Return Values : 반환값이 없는 함수*
 
 *Functions aren’t required to define a return type. Here’s a version of the `greet(person:)` function, which prints its own `String` value rather than returning it:*
+
+반환 타입을 정의하기 위해 기능이 필요하지 않습니다. 다음은 값을 반환하지 않고 고유한 `String` 값을 출력하는 `greet(person:)`함수의 버전입니다.
 
 ```swift
 func greet(person: String) {
@@ -50,11 +64,17 @@ greet(person: "Dave")
 
 *Because it doesn’t need to return a value, the function’s definition doesn’t include the return arrow (`->`) or a return type.*
 
+값을 반환할 필요가 없기 때문에 함수의 정의에는 반환 화살표 (`->`)나 반환 타입이 포함되지 않습니다.
+
 > *NOTE*
 > 
 > *Strictly speaking, this version of the `greet(person:)` function does still return a value, even though no return value is defined. Functions without a defined return type return a special value of type `Void`. This is simply an empty tuple, which is written as `()`.*
+> 
+> 엄밀하게 말하면, 이 버전의 `greet(person:)`함수는 반환 값이 정의되지 않더라도 값을 반환합니다. 반환 타입이 정의되지 않은 함수는 `Void` 타입의 특수 값을 반환합니다. 이거은 단순히 빈 튜플이며 `()` 로 쓰여집니다.
 
 *The return value of a function can be ignored when it’s called:*
+
+함수의 반환값은 다음과 같이 호출될 때 무시할 수 있습니다.
 
 ```swift
 func printAndCount(string: String) -> Int {
@@ -72,17 +92,23 @@ printWithoutCounting(string: "hello, world")
 
 *The first function, `printAndCount(string:)`, prints a string, and then returns its character count as an `Int`. The second function, `printWithoutCounting(string:)`, calls the first function, but ignores its return value. When the second function is called, the message is still printed by the first function, but the returned value isn’t used.*
 
+첫번째 함수인 `printAndCount(string:)`는 문자열을 출력한 다음 해당 문자 수를 Int 로 반환합니다. 두번째 함수 `printWithoutCounting(string:)`는 첫번째 함수를 호출하지만 반환 값은 무시합니다. 두번째 함수가 호출될 때 메세지는 첫번째 함수에 의해 계속 출력되지만 반환된 값은 사용되지 않습니다.
+
 > *NOTE*
 > 
 > *Return values can be ignored, but a function that says it will return a value must always do so. A function with a defined return type can’t allow control to fall out of the bottom of the function without returning a value, and attempting to do so will result in a compile-time error.*
+> 
+> 리턴 타입은 무시할 수 있지만, 반환값을 반환한다는 함수는 항상 그렇게 해야합니다. 반환 타입이 정의된 함수는 값을 반환하지 않고 함수의 맨 아래에서 컨트롤이 빠지는 것을 허용할 수 없으며 이를 시도하면 컴파일 타임 에러가 발생합니다.
 
-
-
-### *Functions with Multiple Return Values*
+### *Functions with Multiple Return Values : 복수 반환 값이 있는 함수*
 
 *You can use a tuple type as the return type for a function to return multiple values as part of one compound return value.*
 
+복합체 반환값의 일부로 여러 값을 반환하는 함수의 반환 타입으로 튜플 타입을 사용할 수 있습니다.
+
 *The example below defines a function called `minMax(array:)`, which finds the smallest and largest numbers in an array of `Int` values:*
+
+아래의 예시는 Int 값의 배열에서 가장 작은 숫자와 가장 큰 숫자를 찾는 `minMax(array:)`라는 함수를 정의합니다.
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int) {
@@ -112,8 +138,6 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 ```
 
 *Note that the tuple’s members don’t need to be named at the point that the tuple is returned from the function, because their names are already specified as part of the function’s return type.*
-
-
 
 #### *Optional Tuple Return Types*
 
