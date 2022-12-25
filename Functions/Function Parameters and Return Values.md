@@ -127,9 +127,15 @@ func minMax(array: [Int]) -> (min: Int, max: Int) {
 
 *The `minMax(array:)` function returns a tuple containing two `Int` values. These values are labeled `min` and `max` so that they can be accessed by name when querying the function’s return value.*
 
+`minMax(array:)`함수는 두개의 `Int`값을 포함하는 튜플을 반환합니다. 이 값들은 함수의 반환 값을 쿼리할 때 이름으로 접근할 수 있도록 `min`과 `max`라는 레이블이 붙습니다. 
+
 *The body of the `minMax(array:)` function starts by setting two working variables called `currentMin` and `currentMax` to the value of the first integer in the array. The function then iterates over the remaining values in the array and checks each value to see if it’s smaller or larger than the values of `currentMin` and `currentMax` respectively. Finally, the overall minimum and maximum values are returned as a tuple of two `Int` values.*
 
+`minMax(array:)` 함수의 본문은 `currentMin`과 `currentMax`라는 두 개의 작업 변수를 배열의 첫번째 정수 값으로 설정하는 것으로 시작합니다. 그런 다음 이 함수는 배열의 나머지 값에 대해 반복하고 각 값이 각각 `currentMin`과 `currentMax`의 값보다 작은지 큰지 확인합니다. 마지막으로, 전체 최소값과 최대값은 두 개의 `Int` 값의 튜플로 반환됩니다.
+
 *Because the tuple’s member values are named as part of the function’s return type, they can be accessed with dot syntax to retrieve the minimum and maximum found values:*
+
+튜플의 멤버 값은 함수의 반환 타입의 일부로 지정되기 때문에 도트 구문을 사용해서 최소 및 최대 발견 값을 검색할 수 있습니다.
 
 ```swift
 let bounds = minMax(array: [8, -6, 2, 109, 3, 71])
@@ -139,17 +145,27 @@ print("min is \(bounds.min) and max is \(bounds.max)")
 
 *Note that the tuple’s members don’t need to be named at the point that the tuple is returned from the function, because their names are already specified as part of the function’s return type.*
 
-#### *Optional Tuple Return Types*
+튜플의 구성원들의 이름은 이미 함수의 반환 타입의 일부로 지정되어있기 때문에 함수에서 반환되는 지점에서 이름을 지정할 필요가 없습니다. 
+
+#### *Optional Tuple Return Types : 옵셔널 튜플 반환 타입*
 
 *If the tuple type to be returned from a function has the potential to have “no value” for the entire tuple, you can use an optional tuple return type to reflect the fact that the entire tuple can be `nil`. You write an optional tuple return type by placing a question mark after the tuple type’s closing parenthesis, such as `(Int, Int)?` or `(String, Int, Bool)?`.*
+
+함수에서 반환될 튜플 타입이 전체 튜플에 대해 "값이 없을" 가능성이 있는 경우, 옵셔널 튜플 반환 타입을 이용해서 전체 튜플이 nil일 수 있다는 사실을 반영할 수 있습니다. 옵셔널 튜플 반환 타입은 `(Int, Int)?`이나  `(String, Int, Bool)?`와 같이 튜플 타입의 닫힘 괄호 뒤에 물음표를 배치해서 작성합니다.
 
 > *NOTE*
 > 
 > *An optional tuple type such as `(Int, Int)?` is different from a tuple that contains optional types such as `(Int?, Int?)`. With an optional tuple type, the entire tuple is optional, not just each individual value within the tuple.*
+> 
+> `(Int, Int)?`와 같은 옵셔널 튜플 타입은 `(Int?, Int?)` 와 같은 옵셔널 타입을 포함하는 튜플과는 다릅니다. 옵셔널 튜플 타입의 경우, 튜플 내의 각 개별 값만 옵셔널인 것이 아니라 전체 튜플은 옵셔널 입니다.
 
 *The `minMax(array:)` function above returns a tuple containing two `Int` values. However, the function doesn’t perform any safety checks on the array it’s passed. If the `array` argument contains an empty array, the `minMax(array:)` function, as defined above, will trigger a runtime error when attempting to access `array[0]`.*
 
+위의 `minMax(array:)` 함수는 두 개의 `Int` 값을 포함하는 튜플을 반환합니다. 그러나 전달된 배열에 대해서는 안전 체크가 수행되지 않습니다. `array` 인수에 빈 배열이 포함된 경우 위에서 정의한 대로 `minMax(array:)` 함수는 `array[0]`에 엑세스하려고 할 때 런타임 오류를 발생시킵니다.
+
 *To handle an empty array safely, write the `minMax(array:)` function with an optional tuple return type and return a value of `nil` when the array is empty:*
+
+빈 배열을 안전하게 처리하려면 옵셔널 튜플 반환 타입으로 `minMax(array:)` 함수를 작성하고 배열이 비어있을 때 `nil` 값을 반환합니다.
 
 ```swift
 func minMax(array: [Int]) -> (min: Int, max: Int)? {
@@ -169,6 +185,8 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 
 *You can use optional binding to check whether this version of the `minMax(array:)` function returns an actual tuple value or `nil`:*
 
+옵셔널 바인딩을 사용해서 이 버전의  `minMax(array:)` 함수가 실제 튜플 값을 반환하는지 혹은 nil을 반환하는지 확인할 수 있습니다.
+
 ```swift
 if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
@@ -176,9 +194,11 @@ if let bounds = minMax(array: [8, -6, 2, 109, 3, 71]) {
 // Prints "min is -6 and max is 109"
 ```
 
-### *Functions With an Implicit Return*
+### *Functions With an Implicit Return : 함수의 암묵적 반환*
 
 *If the entire body of the function is a single expression, the function implicitly returns that expression. For example, both functions below have the same behavior:*
+
+함수의 전체 본문이 단일 표현식인 경우 함수는 암시적으로 해당 표현식을 반환합니다. 예를 들어, 아래의 두 함수는 동일한 동작을 참조하세요:
 
 ```swift
 func greeting(for person: String) -> String {
@@ -196,8 +216,14 @@ print(anotherGreeting(for: "Dave"))
 
 *The entire definition of the `greeting(for:)` function is the greeting message that it returns, which means it can use this shorter form. The `anotherGreeting(for:)` function returns the same greeting message, using the `return` keyword like a longer function. Any function that you write as just one `return` line can omit the `return`.*
 
+`greeting(for:)`함수의 전체 정의는 반환되는 인사말 메세지이며 이는 이 짧은 타입을 사용할 수 있음을 의미합니다. `anotherGreeting(for:)` 함수는 `return` 키워드를 더 긴 함수처럼 사용해서 동일한 인사말 메세지를 반환합니다. 한 줄의 `return`으로 쓰는 함수는 `return`을 생략할 수 있습니다.
+
 *As you’ll see in [Shorthand Getter Declaration](https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID608), property getters can also use an implicit return.*
+
+[링크]에서 볼 수 있듯이, 프로퍼티 getter 도 암묵적 반환을 사용할 수 있습니다.
 
 > *NOTE*
 > 
-> *The code you write as an implicit return value needs to return some value. Fo*r example, you can’t use `print(13)` as an implicit return value. However, you can use a function that never returns like `fatalError("Oh no!")` as an implicit return value, because Swift knows that the implicit return doesn’t happen.
+> *The code you write as an implicit return value needs to return some value. For example, you can’t use `print(13)` as an implicit return value. However, you can use a function that never returns like `fatalError("Oh no!")` as an implicit return value, because Swift knows that the implicit return doesn’t happen.*
+> 
+> 암시적 반환값으로 작성하는 코드는 일부 값을 반환해야 합니다. 예를 들어 암시적 반환 값으로 `print(13)`을 사용할 수 없습니다. 그러나 Swift는 암묵적 변환이 발생하지 않는 다는 것을 알고있기 때문에 `fatalError("Oh no!")`와 같이 절대 반환되지 않는 함수를 암묵적 반환 값으로 사용할 수 있습니다.
