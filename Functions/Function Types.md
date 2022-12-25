@@ -65,8 +65,6 @@ let anotherMathFunction = addTwoInts
 // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 ```
 
-
-
 ### *Function Types as Parameter Types*
 
 *You can use a function type such as `(Int, Int) -> Int` as a parameter type for another function. This enables you to leave some aspects of a function’s implementation for the function’s caller to provide when the function is called.*
@@ -86,8 +84,6 @@ printMathResult(addTwoInts, 3, 5)
 *When `printMathResult(_:_:_:)` is called, it’s passed the `addTwoInts(_:_:)` function, and the integer values `3` and `5`. It calls the provided function with the values `3` and `5`, and prints the result of `8`.*
 
 *The role of `printMathResult(_:_:_:)` is to print the result of a call to a math function of an appropriate type. It doesn’t matter what that function’s implementation actually does—it matters only that the function is of the correct type. This enables `printMathResult(_:_:_:)` to hand off some of its functionality to the caller of the function in a type-safe way.*
-
-
 
 ### *Function Types as Return Types*
 
@@ -125,7 +121,15 @@ let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
 *Now that `moveNearerToZero` refers to the correct function, it can be used to count to zero:*
 
 ```swift
-
+print("Counting to zero:")
+// Counting to zero:
+while currentValue != 0 {
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+}
+print("zero!")
+// 3...
+// 2...
+// 1...
+// zero!
 ```
-
-
