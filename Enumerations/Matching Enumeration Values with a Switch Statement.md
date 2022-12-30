@@ -37,7 +37,7 @@ case .west:
 
 *When it isn’t appropriate to provide a `case` for every enumeration case, you can provide a `default` case to cover any cases that aren’t addressed explicitly:*
 
-모든 열거형 케이스에 대해 `case`를 제공하는 것이 적절하지 않은 경우, 명시적으로 해결되지 않은 사례를 포함하는 `default`사례를 제공할 수 있습니다.
+모든 열거형 케이스에 대해 `case`를 제공하는 것이 적절하지 않은 경우, 명시적으로 해결되지 않은 케이스를 포함하는 `default`케이스를 제공할 수 있습니다.
 
 ```swift
 let somePlanet = Planet.earth
