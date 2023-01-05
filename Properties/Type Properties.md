@@ -127,5 +127,11 @@ print(AudioChannel.maxInputLevelForAllChannels)
 *If you try to set the `currentLevel` of the right channel to `11`, you can see that the right channel’s `currentLevel` property is capped to the maximum value of `10`, and the `maxInputLevelForAllChannels` type property is updated to equal `10`:*
 
 ```swift
-
+rightChannel.currentLevel = 11
+print(rightChannel.currentLevel)
+// Prints "10"
+print(AudioChannel.maxInputLevelForAllChannels)
+// Prints "10"
 ```
+
+
