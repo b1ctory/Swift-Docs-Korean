@@ -88,5 +88,11 @@ print("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
 *If you create a second player, whom you try to move to a level that’s not yet unlocked by any player in the game, the attempt to set the player’s current level fails:*
 
 ```swift
-
+player = Player(name: "Beto")
+if player.tracker.advance(to: 6) {
+    print("player is now on level 6")
+} else {
+    print("level 6 hasn't yet been unlocked")
+}
+// Prints "level 6 hasn't yet been unlocked"
 ```
