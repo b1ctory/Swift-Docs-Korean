@@ -50,5 +50,10 @@ class Tandem: Bicycle {
 If you create an instance of `Tandem`, you can work with any of its new and inherited properties, and query the read-only `description` property it inherits from `Vehicle`:
 
 ```swift
-
+let tandem = Tandem()
+tandem.hasBasket = true
+tandem.currentNumberOfPassengers = 2
+tandem.currentSpeed = 22.0
+print("Tandem: \(tandem.description)")
+// Tandem: traveling at 22.0 miles per hour
 ```
