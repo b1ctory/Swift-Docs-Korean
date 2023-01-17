@@ -1,24 +1,40 @@
-## *Class Inheritance and Initialization*
+## *Class Inheritance and Initialization : 클래스 상속 및 초기화*
 
 *All of a class’s stored properties—including any properties the class inherits from its superclass—must be assigned an initial value during initialization.*
 
+클래스가 슈퍼클래스에서 상속하는 모든 프로퍼티를 포함한 클래스의 모든 저장 프로퍼티는 초기화 중에 초기 값을 할당해야 합니다.
+
 *Swift defines two kinds of initializers for class types to help ensure all stored properties receive an initial value. These are known as designated initializers and convenience initializers.*
 
-### *Designated Initializers and Convenience Initializers*
+Swift는 모든 저장 프로퍼티가 초기 값을 수신할 수 있도록 클래스 타입 대해 두 가지 종류의 이니셜라이저를 정의합니다. 이를 지정된 이니셜라이저 및 편의 이니셜라이저라고 합니다.
+
+### *Designated Initializers and Convenience Initializers : 지정된 이니셜라이저 및 편의 이니셜라이저입니다*
 
 *Designated initializers are the primary initializers for a class. A designated initializer fully initializes all properties introduced by that class and calls an appropriate superclass initializer to continue the initialization process up the superclass chain.*
 
+지정된 이니셜라이저는 클래스의 기본 이니셜라이저입니다. 지정된 이니셜라이저는 해당 클래스에 의해 도입된 모든 프로퍼티를 완전히 초기화하고 적절한 슈퍼클래스 이니셜라이저를 호출하여 슈퍼클래스 체인에서 초기화 프로세스를 계속합니다.
+
 *Classes tend to have very few designated initializers, and it’s quite common for a class to have only one. Designated initializers are “funnel” points through which initialization takes place, and through which the initialization process continues up the superclass chain.*
+
+클래스에는 지정된 이니셜라이저가 거의 없는 경향이 있으며 클래스가 하나만 있는 것은 매우 일반적입니다. 지정된 이니셜라이저는 초기화가 발생하고 초기화 프로세스가 슈퍼클래스 체인에서 계속되는 "funnel" 지점입니다.
 
 *Every class must have at least one designated initializer. In some cases, this requirement is satisfied by inheriting one or more designated initializers from a superclass, as described in [Automatic Initializer Inheritance](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID222) below.*
 
+모든 클래스에는 지정된 이니셜라이저가 하나 이상 있어야 합니다. 경우에 따라 아래 [링크]에 설명된 대로 슈퍼 클래스에서 하나 이상의 지정된 이니셜라이저를 상속하여 이 요구 사항을 충족할 수 있습니다.
+
 *Convenience initializers are secondary, supporting initializers for a class. You can define a convenience initializer to call a designated initializer from the same class as the convenience initializer with some of the designated initializer’s parameters set to default values. You can also define a convenience initializer to create an instance of that class for a specific use case or input value type.*
+
+편리한 이니셜라이저는 클래스에 대한 이니셜라이저를 지원하는 보조 이니셜라이저입니다. 단축 이니셜라이저를 정의하여 지정된 이니셜라이저의 일부 매개 변수를 기본값으로 설정한 상태에서 단축 이니셜라이저와 동일한 클래스에서 지정된 이니셜라이저를 호출할 수 있습니다. 또한 특정 사용 사례 또는 입력 값 타입에 대한 해당 클래스의 인스턴스를 생성하는 단축 이니셜라이저를 정의할 수 있습니다.
 
 *You don’t have to provide convenience initializers if your class doesn’t require them. Create convenience initializers whenever a shortcut to a common initialization pattern will save time or make initialization of the class clearer in intent.*
 
-### *Syntax for Designated and Convenience Initializers*
+클래스에 필요하지 않은 경우에는 편리한 이니셜라이저를 제공하지 않아도 됩니다. 공통 초기화 패턴으로 바로 가기를 사용하면 시간을 절약하거나 클래스 초기화를 명확하게 만들 수 있습니다.
+
+### *Syntax for Designated and Convenience Initializers : 지정 및 편의 초기화 구문*
 
 *Designated initializers for classes are written in the same way as simple initializers for value types:*
+
+클래스에 지정된 이니셜라이저는 값 타입에 대한 단순 이니셜라이저와 동일한 방식으로 작성됩니다:
 
 ```swift
 init(parameters) {
@@ -27,6 +43,7 @@ init(parameters) {
 ```
 
 *Convenience initializers are written in the same style, but with the `convenience` modifier placed before the `init` keyword, separated by a space:*
+편의 이니셜라이저는 동일한 스타일로 작성되지만, `init` 키워드 앞에 `convenience` 수식어를 두고 공백으로 구분합니다:
 
 ```swift
 convenience init(parameters) {
@@ -34,41 +51,65 @@ convenience init(parameters) {
 }
 ```
 
-### *Initializer Delegation for Class Types*
+### *Initializer Delegation for Class Types : 클래스 타입에 대한 이니셜라이저 위임*
 
 *To simplify the relationships between designated and convenience initializers, Swift applies the following three rules for delegation calls between initializers:*
+
+Swift는 지정된 이니셜라이저와 편의 이니셜라이저간의 관계를 단순화하기 위해 이니셜라이저간 위임 호출에 다음 세 가지 규칙을 적용합니다:
 
 ***Rule 1***
 
 *A designated initializer must call a designated initializer from its immediate superclass.*
 
+지정 이니셜라이저는 지정된 이니셜라이저를 직접 슈퍼클래스에서 호출해야 합니다.
+
 ***Rule 2***
 
 *A convenience initializer must call another initializer from the same class.*
+
+편의 이니셜라이저는 같은 클래스의 다른 이니셜라이저를 호출해야 합니다.
 
 ***Rule 3***
 
 *A convenience initializer must ultimately call a designated initializer.*
 
+편의 이니셜라이저는 최종적으로 지정 이니셜라이저를 호출해야 합니다.
+
 *A simple way to remember this is:*
 
+이를 기억하는 간단한 방법은:
+
 - *Designated initializers must always delegate up.*
+  
+  지정 이니셜라이저는 항상 위임해야 합니다.
 
 - *Convenience initializers must always delegate across.*
+  
+  편의 이니셜라이저는 항상 위임해야 합니다.
 
 *These rules are illustrated in the figure below:*
+
+이러한 규칙은 아래 그림에 설명되어있습니다:
 
 *![](https://docs.swift.org/swift-book/_images/initializerDelegation01_2x.png)*
 
 *Here, the superclass has a single designated initializer and two convenience initializers. One convenience initializer calls another convenience initializer, which in turn calls the single designated initializer. This satisfies rules 2 and 3 from above. The superclass doesn’t itself have a further superclass, and so rule 1 doesn’t apply.*
 
+여기서 슈퍼클래스는 단일 지정 이니셜라이저와 두 개의 편의 이니셜라이저를 가지고 있습니다. 한 편의 이니셜라이저는 다른 편의 이니셜라이저를 호출하고, 이는 다시 단일 지정된 이니셜라이저를 호출합니다. 이것은 위에서 본 규칙 2와 3을 충족합니다. 슈퍼클래스 자체는 더 이상의 슈퍼클래스를 가지고 있지 않기 때문에 규칙 1은 적용되지 않습니다.
+
 *The subclass in this figure has two designated initializers and one convenience initializer. The convenience initializer must call one of the two designated initializers, because it can only call another initializer from the same class. This satisfies rules 2 and 3 from above. Both designated initializers must call the single designated initializer from the superclass, to satisfy rule 1 from above.*
+
+이 그림의 하위 클래스에는 두 개의 지정된 이니셜라이저와 한 개의 편의 이니셜라이저가 있습니다. 편의 이니셜라이저는 동일한 클래스의 다른 이니셜라이저만 호출할 수 있으므로 지정된 두 개의 이니셜라이저 중 하나를 호출해야 합니다. 이것은 위에서 본 규칙 2와 3을 충족합니다. 두 지정된 이니셜라이저는 위에서 규칙 1을 충족하기 위해 슈퍼 클래스에서 단일 지정된 이니셜라이저를 호출해야 합니다.
 
 > *NOTE*
 > 
 > *These rules don’t affect how users of your classes create instances of each class. Any initializer in the diagram above can be used to create a fully initialized instance of the class they belong to. The rules only affect how you write the implementation of the class’s initializers.*
+> 
+> 이러한 규칙은 클래스 사용자가 각 클래스의 인스턴스를 만드는 방법에 영향을 주지 않습니다. 위 다이어그램의 이니셜라이저를 사용하여 해당 클래스가 속한 클래스의 완전한 초기화 인스턴스를 만들 수 있습니다. 규칙은 클래스의 이니셜라이저 구현을 작성하는 방법에만 영향을 미칩니다.
 
 *The figure below shows a more complex class hierarchy for four classes. It illustrates how the designated initializers in this hierarchy act as “funnel” points for class initialization, simplifying the interrelationships among classes in the chain:*
+
+아래 그림은 4개의 클래스에 대한 더 복잡한 클래스 계층을 보여줍니다. 이 계층에서 지정 이니셜라이저가 클래스 초기화를 위한 "funnel" 지점처럼 작동하여 체인의 클래스 간 상호 관계를 단순화하는 방법을 보여줍니다:
 
 *![](https://docs.swift.org/swift-book/_images/initializerDelegation02_2x.png)*
 
@@ -147,6 +188,8 @@ convenience init(parameters) {
 *Once the superclass’s designated initializer is finished, the subclass’s designated initializer can perform additional customization (although again, it doesn’t have to).*
 
 *Finally, once the subclass’s designated initializer is finished, the convenience initializer that was originally called can perform additional customization.*
+
+## ### 0116
 
 ### *Initializer Inheritance and Overriding*
 
@@ -375,9 +418,6 @@ for item in breakfastList {
 // 1 x Orange juice ✔
 // 1 x Bacon ✘
 // 6 x Eggs ✘
-
 ```
 
 *Here, a new array called `breakfastList` is created from an array literal containing three new `ShoppingListItem` instances. The type of the array is inferred to be `[ShoppingListItem]`. After the array is created, the name of the `ShoppingListItem` at the start of the array is changed from `"[Unnamed]"` to `"Orange juice"` and it’s marked as having been purchased. Printing the description of each item in the array shows that their default states have been set as expected.*
-
-
