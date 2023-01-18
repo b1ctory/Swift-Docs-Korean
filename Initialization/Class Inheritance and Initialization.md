@@ -245,27 +245,43 @@ Swift의 컴파일러는 2단계 초기화가 오류 없이 완료되도록 다�
 
 마지막으로, 하위 클래스의 지정된 초기화가 완료되면 원래 호출되었던 편의 이니셜라이저가 추가적인 사용자 지정을 수행할 수 있습니다.
 
-### *Initializer Inheritance and Overriding*
+### *Initializer Inheritance and Overriding : 이니셜라이저 상속 및 오버라이딩*
 
 *Unlike subclasses in Objective-C, Swift subclasses don’t inherit their superclass initializers by default. Swift’s approach prevents a situation in which a simple initializer from a superclass is inherited by a more specialized subclass and is used to create a new instance of the subclass that isn’t fully or correctly initialized.*
+
+Objective-C의 하위 클래스와 달리 Swift 하위 클래스는 기본적으로 슈퍼 클래스 이니셜라이저를 상속하지 않습니다. Swift의 접근 방식은 슈퍼 클래스의 단순 이니셜라이저가 더 전문화된 하위 클래스에 의해 상속되는 상황을 방지하고 완전히 또는 올바르게 초기화되지 않은 하위 클래스의 새 인스턴스를 만드는데 사용됩니다.
 
 > *NOTE*
 > 
 > *Superclass initializers are inherited in certain circumstances, but only when it’s safe and appropriate to do so. For more information, see [Automatic Initializer Inheritance](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID222) below.*
+> 
+> 슈퍼클래스 이니셜라이저는 특정 상황에서 상속되지만 안전하고 적절한 경우에만 상속됩니다. 자세한 내용은 아래의 [Automatic Initializer Inheritance](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#)를 참조하십세요.
 
 *If you want a custom subclass to present one or more of the same initializers as its superclass, you can provide a custom implementation of those initializers within the subclass.*
 
+사용자 정의 하위 클래스가 해당 슈퍼 클래스와 동일한 이니셜라이저 중 하나 이상을 제공하도록 하려면 하위 클래스 내에서 이러한 이니셜라이저의 사용자 정의 구현을 제공할 수 있습니다.
+
 *When you write a subclass initializer that matches a superclass designated initializer, you are effectively providing an override of that designated initializer. Therefore, you must write the `override` modifier before the subclass’s initializer definition. This is true even if you are overriding an automatically provided default initializer, as described in [Default Initializers](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID213).*
 
+슈퍼클래스 지정 이니셜라이저와 일치하는 서브클래스 이니셜라이저를 작성하면 지정된 이니셜라이저의 오버라이드를 효과적으로 제공하는 것입니다. 따라서 하위 클래스의 이니셜라이저 정의 앞에 `override` 수식어를 작성해야 합니다. 이것은 [Default Initializer](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#)에 설명된 대로 자동으로 제공된 기본 이니셜라이저를 재정의하는 경우에도 적용됩니다
+
 *As with an overridden property, method or subscript, the presence of the `override` modifier prompts Swift to check that the superclass has a matching designated initializer to be overridden, and validates that the parameters for your overriding initializer have been specified as intended.*
+
+오버라이드된 프로퍼티, 메서드 또는 서브스크립트와 마찬가지로 `override` 수식자가 있으면 Swift는 슈퍼클래스에 오버라이드할 지정된 이니셜라이저가 있는지 확인하고, 오버라이드된 이니셜라이저의 매개 변수가 의도한 대로 지정되었는지 확인합니다.
 
 > *NOTE*
 > 
 > *You always write the `override` modifier when overriding a superclass designated initializer, even if your subclass’s implementation of the initializer is a convenience initializer.*
+> 
+> 슈퍼 클래스 지정 이니셜라이저를 재정의할 때 하위 클래스의 이니셜라이저 구현이 편의 이니셜라이저인 경우에도 항상 `override` 수식어를 작성합니다.
 
 *Conversely, if you write a subclass initializer that matches a superclass convenience initializer, that superclass convenience initializer can never be called directly by your subclass, as per the rules described above in [Initializer Delegation for Class Types](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID219). Therefore, your subclass is not (strictly speaking) providing an override of the superclass initializer. As a result, you don’t write the `override` modifier when providing a matching implementation of a superclass convenience initializer.*
 
+반대로 슈퍼클래스의 편의 이니셜라이저와 일치하는 하위 클래스 이니셜라이저를 작성하는 경우 위 [Initializer Delegation for Class Types](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#)에서 설명한 규칙에 따라 해당 슈퍼클래스의 편의 이니셜라이저를 하위 클래스에서 직접 호출할 수 없습니다. 따라서 하위 클래스는 (엄밀하게 말하면) 슈퍼 클래스 이니셜라이저의 재정의를 제공하지 않습니다. 따라서 슈퍼클래스의 편의 이니셜라이저의 일치 구현을 제공할 때는 `override` 수식어를 쓰지 않습니다.
+
 *The example below defines a base class called `Vehicle`. This base class declares a stored property called `numberOfWheels`, with a default `Int` value of `0`. The `numberOfWheels` property is used by a computed property called `description` to create a `String` description of the vehicle’s characteristics:*
+
+아래 예에서는 `Vehicle`이라는 기본 클래스를 정의합니다. 이 기본 클래스는 디폴트 값이 `Int`값 `0`인 `numberOfWheels`라는 저장 프로퍼티를 선언합니다. `numberOfWheels` 프로퍼티는 `description`이라는 연산 프로퍼티를 사용하여 차량의 특성에 대한 `String` 설명을 생성합니다:
 
 ```swift
 class Vehicle {
@@ -278,6 +294,8 @@ class Vehicle {
 
 *The `Vehicle` class provides a default value for its only stored property, and doesn’t provide any custom initializers itself. As a result, it automatically receives a default initializer, as described in [Default Initializers](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID213). The default initializer (when available) is always a designated initializer for a class, and can be used to create a new `Vehicle` instance with a `numberOfWheels` of `0`:*
 
+`Vehicle` 클래스는 저장 프로퍼티에만 기본값을 제공하며 사용자 지정 이니셜라이저 자체는 제공하지 않습니다. 따라서 [Default Initializer](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID213)에 설명된 대로 기본 이니셜라이저가 자동으로 수신됩니다. 기본 이니셜라이저(사용 가능한 경우)는 항상 클래스에 대해 지정된 이니셜라이저이며, `numberOfWheels`가 `0`인 새 `Vehicle` 인스턴스를 만드는데 사용할 수 있습니다.
+
 ```swift
 let vehicle = Vehicle()
 print("Vehicle: \(vehicle.description)")
@@ -285,6 +303,8 @@ print("Vehicle: \(vehicle.description)")
 ```
 
 *The next example defines a subclass of `Vehicle` called `Bicycle`:*
+
+다음 예에서는 `Bicycle`이라는 `Vehicle`의 하위 클래스를 정의합니다:
 
 ```swift
 class Bicycle: Vehicle {
@@ -297,9 +317,15 @@ class Bicycle: Vehicle {
 
 *The `Bicycle` subclass defines a custom designated initializer, `init()`. This designated initializer matches a designated initializer from the superclass of `Bicycle`, and so the `Bicycle` version of this initializer is marked with the `override` modifier.*
 
+`Bicycle` 하위 클래스는 사용자 지정 이니셜라이저 `init()`를 정의합니다. 이 지정된 이니셜라이저는 `Bicycle`의 슈퍼클래스의 지정된 이니셜라이저와 일치하므로 이 이니셜라이저의 `Bicycle` 버전은 `override` 수식자로 표시됩니다.
+
 *The `init()` initializer for `Bicycle` starts by calling `super.init()`, which calls the default initializer for the `Bicycle` class’s superclass, `Vehicle`. This ensures that the `numberOfWheels` inherited property is initialized by `Vehicle` before `Bicycle` has the opportunity to modify the property. After calling `super.init()`, the original value of `numberOfWheels` is replaced with a new value of `2`.*
 
+`Bicycle`의 `init()` 이니셜라이저는 `Bicycle` 클래스의 슈퍼 클래스인 `Vehicle`의 기본 이니셜라이저를 호출하는 `super.init()`로 시작합니다. 이렇게 하면 `Bycycle`이 프로퍼티를 수정하기 전에 `numberOfWheels` 상속 프로퍼티가 `Vehicle`에 의해 초기화됩니다. `super.init()`을 호출한 후 `numberOfWheels`의 원래 값이 새 값 `2`로 대체되었습니다.
+
 *If you create an instance of `Bicycle`, you can call its inherited `description` computed property to see how its `numberOfWheels` property has been updated:*
+
+`Bicycle`의 인스턴스를 생성하는 경우 상속된 `description` 연산 프로퍼티를 호출하여 `numberOfWheels`가 어떻게 업데이트 되는지 확인할 수 있습니다.
 
 ```swift
 let bicycle = Bicycle()
@@ -309,7 +335,11 @@ print("Bicycle: \(bicycle.description)")
 
 *If a subclass initializer performs no customization in phase 2 of the initialization process, and the superclass has a synchronous, zero-argument designated initializer, you can omit a call to `super.init()` after assigning values to all of the subclass’s stored properties. If the superclass’s initializer is asynchronous, you need to write `await super.init()` explicitly.*
 
+하위 클래스 이니셜라이저가 초기화 프로세스의 단계 2에서 사용자 지정을 수행하지 않고 슈퍼 클래스에 동기식 0 인수 지정 이니셜라이저가 있는 경우 하위 클래스의 모든 저장 프로퍼티에 값을 할당한 후 `super.init()`에 대한 호출을 생략할 수 있습니다. 슈퍼클래스의 이니셜라이저가 비동기인 경우 `await super.init()`를 명시적으로 작성해야 합니다.
+
 *This example defines another subclass of `Vehicle`, called `Hoverboard`. In its initializer, the `Hoverboard` class sets only its `color` property. Instead of making an explicit call to `super.init()`, this initializer relies on an implicit call to its superclass’s initializer to complete the process.*
+
+이 예에서는 `Hoverboard`라고 하는 `Vehicle`의 다른 하위 클래스를 정의합니다. 이니셜라이저에서 `Hoverboard` 클래스는 `color` 프로퍼티만 설정합니다. 이 이니셜라이저는 `super.init()`에 명시적으로 호출하는 대신 슈퍼클래스의 이니셜라이저에 대한 암시적 호출에 의존하여 프로세스를 완료합니다.
 
 ```swift
 class Hoverboard: Vehicle {
@@ -326,6 +356,8 @@ class Hoverboard: Vehicle {
 
 *An instance of `Hoverboard` uses the default number of wheels supplied by the `Vehicle` initializer.*
 
+`Hoverboard` 인스턴스는 `Vehicle` 이니셜라이저에서 제공하는 기본 휠 수를 사용합니다.
+
 ```swift
 let hoverboard = Hoverboard(color: "silver")
 print("Hoverboard: \(hoverboard.description)")
@@ -335,32 +367,50 @@ print("Hoverboard: \(hoverboard.description)")
 > *NOTE*
 > 
 > *Subclasses can modify inherited variable properties during initialization, but can’t modify inherited constant properties.*
+> 
+> 하위 클래스는 초기화 중에 상속된 변수 프로퍼티를 수정할 수 있지만 상속된 상수 프로퍼티는 수정할 수 없습니다.
 
-### *Automatic Initializer Inheritance*
+### *Automatic Initializer Inheritance : 자동 이니셜라이저 상속*
 
 *As mentioned above, subclasses don’t inherit their superclass initializers by default. However, superclass initializers are automatically inherited if certain conditions are met. In practice, this means that you don’t need to write initializer overrides in many common scenarios, and can inherit your superclass initializers with minimal effort whenever it’s safe to do so.*
 
+위에서 언급한 바와 같이 하위 클래스는 기본적으로 수퍼 클래스 이니셜라이저를 상속하지 않습니다. 그러나 특정 조건이 충족되면 슈퍼클래스 이니셜라이저가 자동으로 상속됩니다. 실제로 많은 일반적인 시나리오에서 초기화 오버라이드를 작성할 필요가 없으며, 안전할 때마다 최소한의 노력으로 슈퍼클래스 초기화를 상속할 수 있습니다.
+
 *Assuming that you provide default values for any new properties you introduce in a subclass, the following two rules apply:*
+
+하위 클래스에 도입하는 새 프로퍼티에 기본값을 제공한다고 가정하면 다음 두 가지 규칙이 적용됩니다:
 
 ***Rule 1***
 
 *If your subclass doesn’t define any designated initializers, it automatically inherits all of its superclass designated initializers.*
 
+하위 클래스가 지정된 이니셜라이저를 정의하지 않으면 모든 슈퍼클래스의 지정된 이니셜라이저를 자동으로 상속합니다.
+
 ***Rule 2***
 
 *If your subclass provides an implementation of all of its superclass designated initializers—either by inheriting them as per rule 1, or by providing a custom implementation as part of its definition—then it automatically inherits all of the superclass convenience initializers.*
 
+하위 클래스가 규칙 1에 따라 상속하거나 정의의 일부로 사용자 지정 구현을 제공하여 모든 슈퍼클래스 지정 이니셜라이저의 구현을 제공하는 경우 모든 슈퍼클래스의 편의 이니셜라이저를 자동으로 상속합니다.
+
 *These rules apply even if your subclass adds further convenience initializers.*
+
+이러한 규칙은 하위 클래스에 편리 이니셜라이저가 추가된 경우에도 적용됩니다.
 
 > *NOTE*
 > 
 > *A subclass can implement a superclass designated initializer as a subclass convenience initializer as part of satisfying rule 2.*
+> 
+> 하위 클래스는 규칙 2를 충족하는 부분으로 슈퍼 클래스 지정 이니셜라이저를 하위 클래스 편의 이니셜라이저로 구현할 수 있습니다.
 
 ### *Designated and Convenience Initializers in Action*
 
 *The following example shows designated initializers, convenience initializers, and automatic initializer inheritance in action. This example defines a hierarchy of three classes called `Food`, `RecipeIngredient`, and `ShoppingListItem`, and demonstrates how their initializers interact.*
 
+다음 예제에서는 지정된 이니셜라이저, 편의 이니셜라이저 및 자동 이니셜라이저 상속이 수행 중인 상태를 보여 줍니다. 이 예에서는  `Food`, `RecipeIngredient`, 그리고 `ShoppingListItem`이라는 세 가지 클래스의 계층을 정의하고 이니셜라이저가 어떻게 상호 작용하는지 보여줍니다.
+
 *The base class in the hierarchy is called `Food`, which is a simple class to encapsulate the name of a foodstuff. The `Food` class introduces a single `String` property called `name` and provides two initializers for creating `Food` instances:*
+
+계층의 기본 클래스는 `Food`라는 이름으로, 식품의 이름을 캡슐화하는 간단한 클래스입니다. `Food` 클래스는 `name`이라는 단일 `String` 프로퍼티를 소개하고 `Food` 인스턴스를 만들기 위한 두 가지 초기화 도구를 제공합니다:
 
 ```swift
 class Food {
@@ -376,9 +426,13 @@ class Food {
 
 *The figure below shows the initializer chain for the `Food` class:*
 
+아래 그림은 `Food` 클래스의 이니셜라이저 체인을 보여줍니다:
+
 *![](https://docs.swift.org/swift-book/_images/initializersExample01_2x.png)*
 
 *Classes don’t have a default memberwise initializer, and so the `Food` class provides a designated initializer that takes a single argument called `name`. This initializer can be used to create a new `Food` instance with a specific name:*
+
+클래스에는 기본 멤버별 이니셜라이저가 없으므로 `Food` 클래스는 `name`이라는 단일 인수를 사용하는 지정 이니셜라이저를 제공합니다. 이 이니셜라이저를 사용하여 다음과 같은 특정 이름의 새 `Food` 인스턴스를 만들 수 있습니다:
 
 ```swift
 let namedMeat = Food(name: "Bacon")
@@ -387,7 +441,11 @@ let namedMeat = Food(name: "Bacon")
 
 *The `init(name: String)` initializer from the `Food` class is provided as a designated initializer, because it ensures that all stored properties of a new `Food` instance are fully initialized. The `Food` class doesn’t have a superclass, and so the `init(name: String)` initializer doesn’t need to call `super.init()` to complete its initialization.*
 
+`Food` 클래스의 `init(name: String)` 이니셜라이저는 새로운 `Food` 인스턴스의 모든 저장 프로퍼티가 완전히 초기화되도록 하기 때문에 지정 이니셜라이저로 제공됩니다. `Food` 클래스에는 슈퍼 클래스가 없으므로 `init(name: String)` 이니셜라이저는 `super.init()`을 호출하여 초기화를 완료할 필요가 없습니다.
+
 *The `Food` class also provides a convenience initializer, `init()`, with no arguments. The `init()` initializer provides a default placeholder name for a new food by delegating across to the `Food` class’s `init(name: String)` with a `name` value of `[Unnamed]`:*
+
+`Food` 클래스는 또한 인수 없이 `init()`이라는 편의 이니셜라이저를 제공합니다. `init()` 이니셜라이저는 `name`값이 `[Unnamed]`인 `Food` 클래스의 `init(name:String)`에 위임하여 새 식품의 기본 placeholder 이름을 제공합니다:
 
 ```swift
 let mysteryMeat = Food()
@@ -395,6 +453,8 @@ let mysteryMeat = Food()
 ```
 
 *The second class in the hierarchy is a subclass of `Food` called `RecipeIngredient`. The `RecipeIngredient` class models an ingredient in a cooking recipe. It introduces an `Int` property called `quantity` (in addition to the `name` property it inherits from `Food`) and defines two initializers for creating `RecipeIngredient` instances:*
+
+이 계층의 두 번째 클래스는 `RecipeIngredient`라는 식품의 하위 클래스 입니다. `RecipeIngredient`는 요리 레시피의 재료를 모델로 합니다. 여기에는 `quantity`라는 `Int` 프로퍼티(`Food`에서 상속되는 `name` 프로퍼티 외에도)이 도입되고 `RecipeInderent` 인스턴스를 생성하기 위한 두 가지 이니셜라이저가 정의됩니다:
 
 ```swift
 class RecipeIngredient: Food {
@@ -411,19 +471,33 @@ class RecipeIngredient: Food {
 
 *The figure below shows the initializer chain for the `RecipeIngredient` class:*
 
+아래 그림은 `RecipeIngredient` 클래스의 이니셜라이저 체인을 보여줍니다:
+
 *![](https://docs.swift.org/swift-book/_images/initializersExample02_2x.png)*
 
 *The `RecipeIngredient` class has a single designated initializer, `init(name: String, quantity: Int)`, which can be used to populate all of the properties of a new `RecipeIngredient` instance. This initializer starts by assigning the passed `quantity` argument to the `quantity` property, which is the only new property introduced by `RecipeIngredient`. After doing so, the initializer delegates up to the `init(name: String)` initializer of the `Food` class. This process satisfies safety check 1 from [Two-Phase Initialization](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID220) above.*
 
+`RecipeIncomponent` 클래스에는 새 `RecipeIncomponent` 인스턴스의 모든 프로퍼티를 채우는 데 사용할 수 있는 단일 지정 이니셜라이저 `init(name: String, quantity: Int)`가 있습니다. 이 이니셜라이저는 통과된 `quantity` 인수를 `RecipeIngredient` 가 도입한 유일한 새 프로퍼티인 `quantity` 프로퍼티에 할당하는 것으로 시작합니다. 이렇게 하면 이니셜라이저는 `Food` 클래스의 `init(name: String)` 이니셜라이저를 위임합니다. 이 프로세스는 위의 [Two-Phase Initialization](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#)의 안전 점검 1을 충족합니다.
+
 *`RecipeIngredient` also defines a convenience initializer, `init(name: String)`, which is used to create a `RecipeIngredient` instance by name alone. This convenience initializer assumes a quantity of `1` for any `RecipeIngredient` instance that’s created without an explicit quantity. The definition of this convenience initializer makes `RecipeIngredient` instances quicker and more convenient to create, and avoids code duplication when creating several single-quantity `RecipeIngredient` instances. This convenience initializer simply delegates across to the class’s designated initializer, passing in a `quantity` value of `1`.*
+
+`RecipeIncomponent`는 또한 이름만으로 `RecipeIncomponent` 인스턴스를 만드는 데 사용되는 편의 이니셜라이저인 `init(name: String)`를 정의합니다. 이 편의 이니셜라이저는 명시적인 양 없이 생성된 모든 `RecipeIncomponent` 인스턴스에 대해 `1`의 양을 가정합니다. 이 편의 이니셜라이저의 정의를 통해 `RecipeIncredent` 인스턴스를 더 빠르고 쉽게 만들 수 있으며, 단일 수량의 `RecipeIncredent` 인스턴스를 여러 개 만들 때 코드 중복을 방지할 수 있습니다. 이 편의 이니셜라이저는 클래스의 지정된 이니셜라이저에 `quantity` 값 `1`을 전달하는 것만으로 위임됩니다.
 
 *The `init(name: String)` convenience initializer provided by `RecipeIngredient` takes the same parameters as the `init(name: String)` designated initializer from `Food`. Because this convenience initializer overrides a designated initializer from its superclass, it must be marked with the `override` modifier (as described in [Initializer Inheritance and Overriding](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID221)).*
 
+`RecipeIncient`에서 제공하는 `init(name:String)` 편의 이니셜라이저는 `Food`의 `init(name:String)` 지정 이니셜라이저와 동일한 매개 변수를 취합니다. 이 편의 이니셜라이저는 지정된 이니셜라이저를 슈퍼클래스에서 재정의하므로 [Initializer Inheritance and Overriding](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#)에 설명된 대로 `override` 수식자로 표시해야 합니다.
+
 *Even though `RecipeIngredient` provides the `init(name: String)` initializer as a convenience initializer, `RecipeIngredient` has nonetheless provided an implementation of all of its superclass’s designated initializers. Therefore, `RecipeIngredient` automatically inherits all of its superclass’s convenience initializers too.*
+
+`RecipeIncomplement`는 `init(name: String)` 이니셜라이저를 편의 이니셜라이저로 제공하지만, `RecipeIncomplement`는 슈퍼클래스의 지정된 이니셜라이저를 모두 구현했습니다. 따라서 `RecipeIngredient`는 슈퍼클래스의 모든 편의 이니셜라이저 기능을 자동으로 이어받습니다.
 
 *In this example, the superclass for `RecipeIngredient` is `Food`, which has a single convenience initializer called `init()`. This initializer is therefore inherited by `RecipeIngredient`. The inherited version of `init()` functions in exactly the same way as the `Food` version, except that it delegates to the `RecipeIngredient` version of `init(name: String)` rather than the `Food` version.*
 
+이 예에서 `RecipeIngredient`의 슈퍼 클래스는 `Food`로, `init()`이라는 단일 편의 이니셜라이저를 가지고 있습니다. 따라서 이 이니셜라이저는 `RecipeIngredient`에 의해 상속됩니다. 상속된 버전의 `init()`은 `Food` 버전이 아닌 `init(name: String)`의 `RecipeIngredient` 버전에 위임된다는 점을 제외하고는 `Food` 버전과 정확히 동일한 방식으로 작동합니다.
+
 *All three of these initializers can be used to create new `RecipeIngredient` instances:*
+
+이러한 세 가지 초기화 도구를 모두 사용하여 새 `RecipeIncomponent` 인스턴스를 만들 수 있습니다:
 
 ```swift
 let oneMysteryItem = RecipeIngredient()
@@ -433,7 +507,11 @@ let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
 
 *The third and final class in the hierarchy is a subclass of `RecipeIngredient` called `ShoppingListItem`. The `ShoppingListItem` class models a recipe ingredient as it appears in a shopping list.*
 
+계층의 세 번째이자 마지막 클래스는 `ShoppingListItem`으로 불리는 `RecipeIngredient`의 하위 클래스입니다. `ShoppingListItem` 클래스는 쇼핑 목록에 표시되는 레시피 재료를 모델링합니다.
+
 *Every item in the shopping list starts out as “unpurchased”. To represent this fact, `ShoppingListItem` introduces a Boolean property called `purchased`, with a default value of `false`. `ShoppingListItem` also adds a computed `description` property, which provides a textual description of a `ShoppingListItem` instance:*
+
+쇼핑 목록의 모든 품목은 "unpurchased"로 시작합니다. 이 사실을 나타내기 위해 `ShoppingListItem`은 기본값이 `false`인 `purchased`라는 Bool 프로퍼티를 도입합니다. `ShoppingListItem`은 `ShoppingListItem` 인스턴스에 대한 텍스트 설명을 제공하는 연산 프로퍼티 `description`도 추가합니다:
 
 ```swift
 class ShoppingListItem: RecipeIngredient {
@@ -449,14 +527,22 @@ class ShoppingListItem: RecipeIngredient {
 > *NOTE*
 > 
 > *`ShoppingListItem` doesn’t define an initializer to provide an initial value for `purchased`, because items in a shopping list (as modeled here) always start out unpurchased.*
+> 
+> `ShoppingListItem`(여기서 모델링한 대로)은 항상 구매되지 않은 상태로 시작하기 때문에 `purchased`에 대한 초기 값을 제공하는 이니셜라이저를 정의하지 않습니다.
 
 *Because it provides a default value for all of the properties it introduces and doesn’t define any initializers itself, `ShoppingListItem` automatically inherits all of the designated and convenience initializers from its superclass.*
 
+`ShoppingListItem`은 도입하는 모든 프로퍼티에 기본값을 제공하며 이니셜라이저 자체를 정의하지 않기 때문에 슈퍼클래스에서 지정된 모든 편의 이니셜라이저를 자동으로 상속합니다.
+
 *The figure below shows the overall initializer chain for all three classes:*
+
+아래 그림은 세 가지 클래스 모두에 대한 전체 이니셜라이저 체인을 보여줍니다:
 
 *![](https://docs.swift.org/swift-book/_images/initializersExample03_2x.png)*
 
 *You can use all three of the inherited initializers to create a new `ShoppingListItem` instance:*
+
+세 가지 상속된 이니셜라이저를 모두 사용하여 새 `ShoppingListItem` 인스턴스를 만들 수 있습니다:
 
 ```swift
 var breakfastList = [
@@ -475,3 +561,5 @@ for item in breakfastList {
 ```
 
 *Here, a new array called `breakfastList` is created from an array literal containing three new `ShoppingListItem` instances. The type of the array is inferred to be `[ShoppingListItem]`. After the array is created, the name of the `ShoppingListItem` at the start of the array is changed from `"[Unnamed]"` to `"Orange juice"` and it’s marked as having been purchased. Printing the description of each item in the array shows that their default states have been set as expected.*
+
+여기서 `breakfastList`라는 새 배열은 세 개의 새 `ShoppingListItem` 인스턴스를 포함하는 배열 리터럴에서 생성됩니다. 배열의 타입은 `[ShoppingListItem]`으로 유추됩니다. 배열이 생성되면 배열 시작 부분에 있는 `ShoppingListItem`의 이름이 `"[Unnamed]"`에서 `"Orange juice"`로 변경되고 구입한 것으로 표시됩니다. 배열의 각 항목에 대한 설명을 출력하면 해당 항목의 기본 상태가 예상대로 설정되었음을 나타냅니다.
