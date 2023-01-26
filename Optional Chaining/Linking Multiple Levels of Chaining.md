@@ -69,6 +69,6 @@ if let johnsStreet = john.residence?.address?.street {
 
 *In this example, the attempt to set the `address` property of `john.residence` will succeed, because the value of `john.residence` currently contains a valid `Residence` instance.*
 
-이 예에서는 `john.residence` 값에 현재 유효한 `Residence` 인스턴스가 포함되어 있으므로 'john.residence'의 'address' 속성을 설정하려는 시도가 성공합니다.
+이 예에서는 `john.residence` 값에 현재 유효한 `Residence` 인스턴스가 포함되어 있으므로 `john.residence`의 `address` 프로퍼티를 설정하려는 시도가 성공합니다.
 
 
