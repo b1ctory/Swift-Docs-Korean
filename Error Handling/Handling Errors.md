@@ -1,14 +1,22 @@
-## *Handling Errors*
+## *Handling Errors: 에러 핸들링*
 
 *When an error is thrown, some surrounding piece of code must be responsible for handling the error—for example, by correcting the problem, trying an alternative approach, or informing the user of the failure.*
 
+오류가 발생하면 주변 코드가 오류 처리를 담당해야 합니다. 예를 들어 문제를 수정하거나 다른 방법을 시도하거나 사용자에게 오류를 알려줍니다.
+
 *There are four ways to handle errors in Swift. You can propagate the error from a function to the code that calls that function, handle the error using a `do`-`catch` statement, handle the error as an optional value, or assert that the error will not occur. Each approach is described in a section below.*
 
+Swift는 4가지 오류 처리 방법이 있습니다. 함수에서 해당 함수를 호출하는 코드로 오류를 전파하거나, `do`-`catch` 문을 사용하여 오류를 처리하거나, 옵셔널 값으로 오류를 처리하거나, 오류가 발생하지 않을 것이라고 주장할 수 있습니다. 각 접근 방식은 아래 섹션에서 설명합니다.
+
 *When a function throws an error, it changes the flow of your program, so it’s important that you can quickly identify places in your code that can throw errors. To identify these places in your code, write the `try` keyword—or the `try?` or `try!` variation—before a piece of code that calls a function, method, or initializer that can throw an error. These keywords are described in the sections below.*
+
+함수가 오류를 발생시키면 프로그램 흐름이 변경되므로 코드에서 오류를 발생시킬 수 있는 위치를 빠르게 식별할 수 있어야 합니다. 코드에서 이러한 위치를 식별하려면 `try` 혹은 `try?` 혹은 `try!` 키워드를 쓰세요.—오류를 발생시킬 수 있는 함수, 메서드 또는 이니셜라이저를 호출하는 코드 앞에 있습니다. 이러한 키워드는 아래 절에 설명되어 있습니다
 
 > *NOTE*
 > 
 > *Error handling in Swift resembles exception handling in other languages, with the use of the `try`, `catch` and `throw` keywords. Unlike exception handling in many languages—including Objective-C—error handling in Swift doesn’t involve unwinding the call stack, a process that can be computationally expensive. As such, the performance characteristics of a `throw` statement are comparable to those of a `return` statement.*
+> 
+> 스위프트의 오류 처리는 `try`, `catch` 및 `throw` 키워드를 사용하는 다른 언어의 예외 처리와 유사합니다. Objective-C를 포함한 여러 언어의 예외 처리와 달리 Swift의 오류 처리에는 계산 비용이 많이 들 수 있는 프로세스인 호출 스택의 해제가 포함되지 않습니다. 따라서 `throw`문의 성능 특성은 return 문의 성능 특성과 비슷합니다.
 
 ### *Propagating Errors Using Throwing Functions*
 
@@ -219,5 +227,3 @@ func fetchData() -> Data? {
 ```swift
 let photo = try! loadImage(atPath: "./Resources/John Appleseed.jpg")
 ```
-
-
