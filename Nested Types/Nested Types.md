@@ -6,4 +6,4 @@
 
 *To nest a type within another type, write its definition within the outer braces of the type it supports. Types can be nested to as many levels as are required.*
 
-다른 타입 내에 타입 중첩하려면 해당 타입 지원하는 유형의 바깥쪽 괄호 안에 정의를 작성합니다. 유형은 필요한 수의 수준으로 중첩될 수 있습니다.
+다른 타입 내에 타입 중첩하려면 해당 타입 지원하는 유형의 바깥쪽 괄호 안에 정의를 작성합니다. 타입은 필요한 수의 수준으로 중첩될 수 있습니다.
