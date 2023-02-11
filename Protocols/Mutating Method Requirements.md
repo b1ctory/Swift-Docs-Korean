@@ -34,7 +34,7 @@ protocol Togglable {
 
 *The example below defines an enumeration called `OnOffSwitch`. This enumeration toggles between two states, indicated by the enumeration cases `on` and `off`. The enumeration’s `toggle` implementation is marked as `mutating`, to match the `Togglable` protocol’s requirements:*
 
-아래 예제에서는 `OnOffSwitch`라는 열거형을 정의합니다. 이 열거형은 케이스 `on`과 `off`로 표시되는 두 상태를 전환합니다. 열거형의 `toggle` 구현은 `toggle` 프로토콜의 요구 사항과 일치하도록 mutating으로 표시됩니다:
+아래 예제에서는 `OnOffSwitch`라는 열거형을 정의합니다. 이 열거형은 케이스 `on`과 `off`로 표시되는 두 상태를 전환합니다. 열거형의 `toggle` 구현은 `toggle` 프로토콜의 요구 사항과 일치하도록 `mutating`으로 표시됩니다:
 
 ```swift
 enum OnOffSwitch: Togglable {
