@@ -31,5 +31,3 @@ var someString = "hello"var anotherString = "world"swapTwoValues(&someString, &a
 > *Note*
 > 
 > *The `swapTwoValues(_:_:)` function defined above is inspired by a generic function called `swap`, which is part of the Swift standard library, and is automatically made available for you to use in your apps. If you need the behavior of the `swapTwoValues(_:_:)` function in your own code, you can use Swift’s existing `swap(_:_:)` function rather than providing your own implementation.*
-
-
