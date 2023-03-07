@@ -7,5 +7,3 @@
 *Each build target (such as an app bundle or framework) in Xcode is treated as a separate module in Swift. If you group together aspects of your app’s code as a stand-alone framework — perhaps to encapsulate and reuse that code across multiple applications — then everything you define within that framework will be part of a separate module when it’s imported and used within an app, or when it’s used within another framework.*
 
 *A source file is a single Swift source code file within a module (in effect, a single file within an app or framework). Although it’s common to define individual types in separate source files, a single source file can contain definitions for multiple types, functions, and so on.*
-
-
