@@ -66,9 +66,11 @@ print("The number of edits is \(stringToEdit.numberOfEdits)")
 
 *Although you can query the current value of the `numberOfEdits` property from within another source file, you can’t modify the property from another source file. This restriction protects the implementation details of the `TrackedString` edit-tracking functionality, while still providing convenient access to an aspect of that functionality.*
 
-다른 소스 파일 내에서 `numberOfEdits` 프로퍼티의 현재 값을 쿼리할 수 있지만 다른 소스 파일에서 프로퍼티를 수정할 수는 없습니다. 이 제한은 TrackedString 편집 추적 기능의 구현 세부정보를 보호하는 동시에 해당 기능의 측면에 대한 편리한 액세스를 계속 제공합니다.
+다른 소스 파일 내에서 `numberOfEdits` 프로퍼티의 현재 값을 쿼리할 수 있지만 다른 소스 파일에서 프로퍼티를 수정할 수는 없습니다. 이 제한은 `TrackedString` 편집 추적 기능의 구현 세부정보를 보호하는 동시에 해당 기능의 측면에 대한 편리한 액세스를 계속 제공합니다.
 
 *Note that you can assign an explicit access level for both a getter and a setter if required. The example below shows a version of the `TrackedString` structure in which the structure is defined with an explicit access level of public. The structure’s members (including the `numberOfEdits` property) therefore have an internal access level by default. You can make the structure’s `numberOfEdits` property getter public, and its property setter private, by combining the `public` and `private(set)` access-level modifiers:*
+
+필요한 경우 getter와 setter 모두에 대해 명시적인 액세스 레벨을 할당할 수 있습니다. 아래 예는 구조체가 퍼블릭의 명시적 액세스 레벨로 정의된 `TrackedString` 구조체의 버전을 보여줍니다. 따라서 구조체의 구성원(`numberOfEdits` 프로퍼티 포함)에는 기본적으로 내부 액세스 수준이 있습니다. `public` 및 `private(set)` 액세스 수준 한정자를 결합하여 구조체의 `numberOfEdits` 프로퍼티 게터를 공개하고 해당 프로퍼티 setter를 프라이빗으로 만들 수 있습니다.
 
 ```swift
 public struct TrackedString {
